@@ -1,9 +1,48 @@
 pipeline{
     agent any
+    environment {
+        IMAGE_NAME1 = "samp-frontend" // Name of the image created in Jenkins
+        IMAGE_NAME2 = "samp-backend" // Name of the image created in Jenkins
+        CONTAINER_NAME = "netflix" // Name of the container created in Jenkins
+    }
     stages{
         stage('git checkout'){
             steps{
                 git 'https://github.com/Rancidwhale/mern_application.git'
+            }
+        }
+        stage('Clean Up Docker Resources') {
+            steps {
+                script {
+                    // Remove the specific container
+                    sh '''
+                    if docker ps -a --format '{{.Names}}' | grep -q $CONTAINER_NAME; then
+                        echo "Stopping and removing container: $CONTAINER_NAME"
+                        docker stop $CONTAINER_NAME
+                        docker rm $CONTAINER_NAME
+                    else
+                        echo "Container $CONTAINER_NAME does not exist."
+                    fi
+                    '''
+
+                    // Remove the specific image
+                    sh '''
+                    if docker images -q $IMAGE_NAME1; then
+                        echo "Removing image: $IMAGE_NAME1"
+                        docker rmi -f $IMAGE_NAME1
+                    else
+                        echo "Image $IMAGE_NAME1 does not exist."
+                    fi
+                    '''
+                    sh '''
+                    if docker images -q $IMAGE_NAME2; then
+                        echo "Removing image: $IMAGE_NAME2"
+                        docker rmi -f $IMAGE_NAME2
+                    else
+                        echo "Image $IMAGE_NAME2 does not exist."
+                    fi
+                    '''
+                }
             }
         }
         stage('docker-compose'){

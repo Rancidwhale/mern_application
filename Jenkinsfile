@@ -1,7 +1,7 @@
 pipeline{
     agent any
     stages{
-        stage("git"){
+        stage('git checkout'){
             steps{
                 git 'https://github.com/Rancidwhale/mern_application.git'
             }

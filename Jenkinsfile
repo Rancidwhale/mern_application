@@ -3,7 +3,8 @@ pipeline{
     environment {
         IMAGE_NAME1 = "samp-frontend" // Name of the image created in Jenkins
         IMAGE_NAME2 = "samp-backend" // Name of the image created in Jenkins
-        CONTAINER_NAME = "netflix" // Name of the container created in Jenkins
+        CONTAINER_NAME1 = "samp-frontend-1" // Name of the container created in Jenkins
+        CONTAINER_NAME2 = "samp-backend-1" // Name of the container created in Jenkins
     }
     stages{
         stage('git checkout'){
@@ -16,12 +17,21 @@ pipeline{
                 script {
                     // Remove the specific container
                     sh '''
-                    if docker ps -a --format '{{.Names}}' | grep -q $CONTAINER_NAME; then
-                        echo "Stopping and removing container: $CONTAINER_NAME"
-                        docker stop $CONTAINER_NAME
-                        docker rm $CONTAINER_NAME
+                    if docker ps -a --format '{{.Names}}' | grep -q $CONTAINER_NAME1; then
+                        echo "Stopping and removing container: $CONTAINER_NAME1"
+                        docker stop $CONTAINER_NAME1
+                        docker rm $CONTAINER_NAME1
                     else
-                        echo "Container $CONTAINER_NAME does not exist."
+                        echo "Container $CONTAINER_NAME1 does not exist."
+                    fi
+                    '''
+                    sh '''
+                    if docker ps -a --format '{{.Names}}' | grep -q $CONTAINER_NAME2; then
+                        echo "Stopping and removing container: $CONTAINER_NAME2"
+                        docker stop $CONTAINER_NAME2
+                        docker rm $CONTAINER_NAME2
+                    else
+                        echo "Container $CONTAINER_NAME2 does not exist."
                     fi
                     '''
 

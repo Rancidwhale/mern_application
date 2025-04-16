@@ -1,10 +1,10 @@
 pipeline{
     agent any
     environment {
-        IMAGE_NAME1 = "samp-frontend" // Name of the image created in Jenkins
-        IMAGE_NAME2 = "samp-backend" // Name of the image created in Jenkins
-        CONTAINER_NAME1 = "samp-frontend-1" // Name of the container created in Jenkins
-        CONTAINER_NAME2 = "samp-backend-1" // Name of the container created in Jenkins
+        IMAGE_NAME1 = "mern-app-frontend " // Name of the image created in Jenkins
+        IMAGE_NAME2 = "mern-app-backend " // Name of the image created in Jenkins
+        CONTAINER_NAME1 = "mern-app-frontend-1" // Name of the container created in Jenkins
+        CONTAINER_NAME2 = "mern-app-backend-1" // Name of the container created in Jenkins
     }
     stages{
         stage('git '){

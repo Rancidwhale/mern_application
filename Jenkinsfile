@@ -7,7 +7,7 @@ pipeline{
         CONTAINER_NAME2 = "samp-backend-1" // Name of the container created in Jenkins
     }
     stages{
-        stage('git checkout'){
+        stage('git '){
             steps{
                 git 'https://github.com/Rancidwhale/mern_application.git'
             }

@@ -12,6 +12,11 @@ pipeline{
         SCANNER_HOME = tool 'sonar-scanner'
     }
     stages{
+        stage('clean workspace'){
+            steps{
+                cleanWs()
+            }
+        }
         stage('git '){
             steps{
                 git 'https://github.com/Rancidwhale/mern_application.git'

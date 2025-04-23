@@ -1,3 +1,7 @@
+def COLOR_MAP = [
+    'SUCCESS': 'good',
+    'FAILURE': 'danger'
+    ]
 pipeline{
     agent any
     environment {
@@ -5,6 +9,7 @@ pipeline{
         IMAGE_NAME2 = "mern-app-backend " // Name of the image created in Jenkins
         CONTAINER_NAME1 = "mern-app-frontend-1" // Name of the container created in Jenkins
         CONTAINER_NAME2 = "mern-app-backend-1" // Name of the container created in Jenkins
+        SCANNER_HOME = tool 'sonar-scanner'
     }
     stages{
         stage('git '){
@@ -55,12 +60,30 @@ pipeline{
                 }
             }
         }
+        stage('Code Analysis'){
+            steps{
+                withSonarQubeEnv('sonar-slave'){
+                    sh ''' $SCANNER_HOME/bin/sonar-scanner -Dsonar.projectName=Chat_Room \
+                    -Dsonar.java.binaries=. \
+                    -Dsonar.projectKey=Chat_Room'''
+                }
+            }
+        }
         stage('docker-compose'){
             steps{
                 script{
                     sh 'docker-compose up -d'
                 }
             }
+        }
+    }
+    post {
+        always {
+            echo 'slack Notification.'
+            slackSend channel: '#demo',
+            color: COLOR_MAP [currentBuild.currentResult],
+            message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URl}"
+            
         }
     }
 }

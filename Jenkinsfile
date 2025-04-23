@@ -5,10 +5,10 @@ def COLOR_MAP = [
 pipeline{
     agent any
     environment {
-        IMAGE_NAME1 = "mern-app-frontend " // Name of the image created in Jenkins
-        IMAGE_NAME2 = "mern-app-backend " // Name of the image created in Jenkins
-        CONTAINER_NAME1 = "mern-app-frontend-1" // Name of the container created in Jenkins
-        CONTAINER_NAME2 = "mern-app-backend-1" // Name of the container created in Jenkins
+        IMAGE_NAME1 = "mern-pipeline-frontend " // Name of the image created in Jenkins
+        IMAGE_NAME2 = "mern-pipeline-backend " // Name of the image created in Jenkins
+        CONTAINER_NAME1 = "mern-pipeline-frontend-1" // Name of the container created in Jenkins
+        CONTAINER_NAME2 = "mern-pipeline-backend-1" // Name of the container created in Jenkins
         SCANNER_HOME = tool 'sonar-scanner'
     }
     stages{

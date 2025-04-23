@@ -76,6 +76,18 @@ pipeline{
                 }
             }
         }
+         stage('docker push'){
+            steps{
+                script{
+                    withDockerRegistry(credentialsId: 'docker-cred'){
+                        sh 'docker tag $IMAGE_NAME1 abdullah77044/IMAGE_NAME1'
+                        sh 'docker tag $IMAGE_NAME2 abdullah77044/IMAGE_NAME2'
+                        sh 'docker push abdullah77044/IMAGE_NAME1'
+                        sh 'docker push abdullah77044/IMAGE_NAME2'
+                    }
+                }
+            }
+        }
     }
     post {
         always {

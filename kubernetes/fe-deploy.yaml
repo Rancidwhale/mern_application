@@ -1,9 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: fe-deployment
+  labels:
+    app: frontend
 spec:
-  replicas: 2
   selector:
     matchLabels:
       app: frontend
@@ -13,7 +14,8 @@ spec:
         app: frontend
     spec:
       containers:
-        - name: frontend
-          image: sushmagowda321/mernfrontend
-          ports:
-            - containerPort: 80
+      - name: frontend-cont
+        image: abdullah77044/mern_application-frontend:latest
+        ports:
+        - containerPort: 80
+

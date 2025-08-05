@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: be-deployment
+  labels:
+    app: backend
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend-cont
+        image: abdullah77044/mern_application-backend:latest
+        env:
+        - name: MONGO_URI
+          value: "mongodb://mongo:27017/budhan-users"
+        ports:
+        - containerPort: 5000
